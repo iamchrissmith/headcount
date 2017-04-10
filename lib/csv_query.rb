@@ -7,12 +7,14 @@ module CSVQuery
 
   def parse_file(file_name)
     contents = load_file(file_name)
-    contents.sanitize
+    contents.sanitize # create sanitization method as illustrated on whiteboard
   end
 
   def get_column(file_name, header)
-    contents.each do |row|
-      header = row[header]
+    contents = load_file(file_name)
+
+    contents.map do |row|
+      row[header]
     end
   end
 end
