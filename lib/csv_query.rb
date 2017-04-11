@@ -25,10 +25,15 @@ module CSVQuery
   end
 
   def sanitize(file_name, header)
+    data = []
     if header == :data && get_column(file_name, header)[0].include?(".")
-      data = []
       csv_to_hash(file_name).each do |hash|
         hash[:data] = format_percent(hash[:data])
+        data << hash
+      end
+    elsif header == :location
+      csv_to_hash(file_name).each do |hash|
+        hash[:location] = hash[:location].upcase
         data << hash
       end
     end

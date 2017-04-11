@@ -35,4 +35,8 @@ class CSVQueryTest < Minitest::Test
   def test_sanitize_data_header
     assert_equal 0.101, DummyClass.new.sanitize("./data/Special education.csv", :data)[4][:data]
   end
+
+  def test_sanitize_location_case
+    assert_equal "COLORADO", DummyClass.new.sanitize("./data/Special education.csv", :location)[0][:location]
+  end
 end
