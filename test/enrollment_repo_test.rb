@@ -6,9 +6,12 @@ class EnrollmentRepositoryTest < MiniTest::Test
 
   def setup
     @er = EnrollmentRepository.new
-    @enrollment_args = {:enrollment => {
-      :kindergarten => "./data/Kindergartners in full-day program.csv"
-    }}
+    @enrollment_args = {
+      :enrollment => {
+        :kindergarten => "./data/Kindergartners in full-day program.csv",
+        :high_school_graduation => "./data/High school graduation rates.csv"
+      }
+    }
     @enrollment_data = {:name => "DISTRICT 1", :kindergarten_participation => {2011 => 0.35356}}
   end
 
