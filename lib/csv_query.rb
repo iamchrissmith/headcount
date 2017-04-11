@@ -7,7 +7,7 @@ module CSVQuery
   end
 
   def parse_file(file_name, header)
-    sanitize(load_file(file_name), header)
+    sanitize(load_file(file_name), header) # Not yet written, sanitize is just an example call for what we might do.
   end
 
   def get_column(file_name, header)
