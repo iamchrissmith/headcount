@@ -11,30 +11,40 @@ class StatewideTestRepository
 
   def load_data(args)
     added_districts = []
+
+    # 1. Move to shared process_data .map/each function to helper method
     args[:statewide_testing].each do |category, file|
       contents = parse_file(file)
       added_districts = added_districts + process_data(contents, category)
     end
+
+
     added_districts.uniq
   end
 
   def process_data(contents, category)
     data_category = translate_category(category)
+    # 1. ^^ does this need to be included?
     contents.map do |row|
       process_row(row, data_category)
     end
   end
 
   def process_row(row, data_category)
+    # move to sanitize(subcategory1, subcategory2 = default to nil for hawaain format block) helper method
     row[:location] = row[:location].upcase
     if row[:dataformat] == "Percent"
       row[:data] = format_percent(row[:data])
     end
+
+    #  2. sanitize, add conditional to check for subcategory as subcategory1 arg
     sub_category = translate_sub_category(data_category)
     if row[sub_category] == "Hawaiian/Pacific Islander"
       row[sub_category] = "Pacific Islander"
     end
-    row[sub_category] = row[sub_category].downcase.gsub(" ", "_")
+
+    # 3. assignment helper method that holds helper methods(????) (!!!!!)for each
+    # assignment? ex: private assign_data(sub_category, )
     testing_data = make_testing_data(row, data_category, sub_category)
     statewide_test = find_by_name(row[:location])
     if statewide_test
