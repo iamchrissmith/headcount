@@ -30,8 +30,18 @@ class StatewideTestRepository
     end
   end
 
+  def step_me(map_or_each, args=nil, contents=nil, category=nil)
+    if param.has_key?[:args]
+      # do args .map thing
+    elsif param.has_key?[:contents] && param.has_key?[:category]
+      # do other one here
+    else
+      # raise error exception (require error thingy)
+    end
+  end
+
   def process_row(row, data_category)
-    # move to sanitize(subcategory1, subcategory2 = default to nil for hawaain format block) helper method
+    # 2. move to sanitize(subcategory1, subcategory2 = default to nil for hawaain format block) helper method
     row[:location] = row[:location].upcase
     if row[:dataformat] == "Percent"
       row[:data] = format_percent(row[:data])
@@ -44,9 +54,18 @@ class StatewideTestRepository
     end
 
     # 3. assignment helper method that holds helper methods(????) (!!!!!)for each
-    # assignment? ex: private assign_data(sub_category, )
+    # assignment? ex: private assign_data(which_assignment, row, sub_category, data_category, statewide_test,
+    row[sub_category] = row[sub_category].downcase.gsub(" ", "_")
+    # row[sub_category].downcase.gsub etc
     testing_data = make_testing_data(row, data_category, sub_category)
+    # make_testing_data(row etc)
     statewide_test = find_by_name(row[:location])
+    # find_by_name(row[:location])
+
+
+
+
+    # Seperate method?
     if statewide_test
       statewide_test.update_data(testing_data)
     else
