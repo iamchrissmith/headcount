@@ -11,36 +11,37 @@ class StatewideTestRepository
 
   def load_data(args)
     added_districts = []
-
-    # 1. Move to shared process_data .map/each function to helper method
     args[:statewide_testing].each do |category, file|
       contents = parse_file(file)
       added_districts = added_districts + process_data(contents, category)
     end
-
-
     added_districts.uniq
+    # data = args[:statewide_testing]
+    # step_me(data)
   end
 
   def process_data(contents, category)
-    data_category = translate_category(category)
-    # 1. ^^ does this need to be included?
+    data_category = translate_category(category)\
     contents.map do |row|
       process_row(row, data_category)
     end
   end
 
-  def step_me(map_or_each, args=nil, contents=nil, category=nil)
-    if param.has_key?[:args]
-      # do args .map thing
-    elsif param.has_key?[:contents] && param.has_key?[:category]
-      # do other one here
-    else
-      # raise error exception (require error thingy)
+  def step_me(data)
+    # if args.has_key?[:args]
+    added_districts = []
+    args[data].each do |category, file|
+      contents = parse_file(file)
+      added_districts = added_districts + process_data(contents, category)
     end
+    added_districts.uniq
+    # elsif contents.has_key?[:contents] && contents.has_key?[:category]
+    # else
+    #   # raise error exception (require error thingy)
+    # end
   end
 
-  def process_row(row, data_category)
+def process_row(row, data_category)
     # 2. move to sanitize(subcategory1, subcategory2 = default to nil for hawaain format block) helper method
     row[:location] = row[:location].upcase
     if row[:dataformat] == "Percent"
