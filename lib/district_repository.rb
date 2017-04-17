@@ -10,25 +10,25 @@ class DistrictRepository
 
   def initialize
     @data = []
-    @enrollment_repo = nil
-    @testing_repo = nil
-    @economic_profile_repo = nil
+    @enrollment_repo = EnrollmentRepository.new
+    @testing_repo = StatewideTestRepository.new
+    @economic_profile_repo = EconomicProfileRepository.new
   end
 
   def load_data(args)
     if args.key?(:enrollment)
-      @enrollment_repo = EnrollmentRepository.new if @enrollment_repo.nil?
-      district_data = @enrollment_repo.load_data({enrollment: args[:enrollment]})
+      enrollment_data = {enrollment: args[:enrollment]}
+      district_data = @enrollment_repo.load_data(enrollment_data)
       populate_data(district_data)
     end
     if args.key?(:statewide_testing)
-      @testing_repo ||= StatewideTestRepository.new
-      district_data = @testing_repo.load_data({statewide_testing: args[:statewide_testing]})
+      testing_data = {statewide_testing: args[:statewide_testing]}
+      district_data = @testing_repo.load_data(testing_data)
       populate_data(district_data)
     end
     if args.key?(:economic_profile)
-      @economic_profile_repo ||= EconomicProfileRepository.new
-      district_data = @economic_profile_repo.load_data({economic_profile: args[:economic_profile]})
+      economic_data = {economic_profile: args[:economic_profile]}
+      district_data = @economic_profile_repo.load_data(economic_data)
       populate_data(district_data)
     end
   end

@@ -22,12 +22,6 @@ class DistrictRepositoryTest < MiniTest::Test
     assert @dr
   end
 
-  def test_initializes_with_no_repos
-    assert_nil @dr.enrollment_repo
-    assert_nil @dr.testing_repo
-    assert_nil @dr.economic_profile_repo
-  end
-
   def test_responds_to_load_file
     assert_respond_to(@dr, :load_data)
   end
