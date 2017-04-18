@@ -23,4 +23,7 @@ require_relative '../lib/statewide_testing_repository'
 require_relative '../lib/builders/statewide_test_builder'
 require_relative '../lib/statewide_test'
 
+require_relative '../lib/result_set'
+require_relative '../lib/result_entry'
+
 require_relative '../lib/headcount_analyst'
